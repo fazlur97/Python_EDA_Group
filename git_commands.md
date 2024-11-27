@@ -6,6 +6,7 @@
     *	Add the files you want to merge to the staging area 
         * To add each file - git add \<filenames\>
         * To add all the files – git add .
+        * To delete file - git rm \<filenames\>
     * Commit the changes in the staging area – git commit -m “Write a commit message”
     * Push your changes to the github remote repository – git push
 *	To view the files that have been changed in your local repository – git status
