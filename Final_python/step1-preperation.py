@@ -11,6 +11,8 @@ import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 # Read the task data
 task_data = pd.read_csv('../Original_datasets/tasks.csv', index_col=0)
@@ -90,6 +92,14 @@ new_tasks = task_data.drop(columns = columns_to_drop)
 print(f"Columns dropped due to high correlation: {columns_to_drop}")
 print(f"\nRemaining columns: {new_tasks.columns.tolist()}\n")
 
+# Box Plots to Identify Outliers for task_data
+plt.figure(figsize=(20, 10))
+sns.boxplot(data=task_data, palette="coolwarm")
+plt.title("Distribution of Task Features")
+plt.xticks(rotation=90)
+plt.tight_layout()
+plt.show()
+
 # Scaling tasks data
 scaler = StandardScaler()
 scaled_tasks = scaler.fit_transform(new_tasks)
@@ -134,6 +144,14 @@ columns_to_drop = list(set(columns_to_drop))  # Remove duplicates
 print(f"Columns dropped due to high correlation: {columns_to_drop}")
 print("There is no multicollinearity in the suppliers dataset, hence no columns dropped\n")
 
+# Box Plots to Identify Outliers for supplier_data
+plt.figure(figsize=(20, 10))
+sns.boxplot(data=supplier_data, palette="coolwarm")
+plt.title("Distribution of Supplier Features")
+plt.xticks(rotation=90)
+plt.tight_layout()
+plt.show()
+
 # Scaling suppliers data
 scaled_suppliers = scaler.fit_transform(supplier_data)
 scaled_suppliers = pd.DataFrame(scaled_suppliers, columns = supplier_data.columns, index = supplier_data.index)
@@ -162,4 +180,4 @@ scaled_tasks.to_csv("../Processed_datasets/scaled_tasks.csv")
 scaled_suppliers.to_csv("../Processed_datasets/scaled_suppliers.csv")
 tasks_pca.to_csv("../Processed_datasets/pca_tasks.csv")
 suppliers_pca.to_csv("../Processed_datasets/pca_suppliers.csv")
-new_cost.to_csv("../Processed_datasets/best_suppliers_cost.csv")
+new_cost.to_csv("../Processed_datasets/best_suppliers_cost.csv", index=False)
