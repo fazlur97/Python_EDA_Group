@@ -41,7 +41,7 @@ suppliers = final_df.iloc[:, 1]  # Supplier
 logo = LeaveOneGroupOut()
 
 # Initialize the MLP Regressor
-model = MLPRegressor(hidden_layer_sizes=(50, 50), max_iter=100, random_state=42)
+model = MLPRegressor(hidden_layer_sizes=(50,), max_iter=100, random_state=41)
 
 # List to hold custom scores, suppliers, and group names for each fold
 custom_scores = []

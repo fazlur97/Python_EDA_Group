@@ -168,10 +168,10 @@ suppliers_pca.columns = [f"SF-PC{i+1}" for i in range(suppliers_pca.shape[1])]
 # Identifying the top-performing suppliers for each task
 top_supplier = cost_data.loc[cost_data.groupby("Task ID")["Cost"].idxmin()]
 
-# Identifying the top 10 suppliers for each task
+# Identifying the top 45 suppliers for each task
 new_cost = (
     cost_data.groupby('Task ID')
-    .apply(lambda group: group.nsmallest(10, 'Cost'))
+    .apply(lambda group: group.nsmallest(45, 'Cost'))
     .reset_index(drop=True)
 )
 

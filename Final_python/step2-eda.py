@@ -123,10 +123,10 @@ plt.grid(axis='y', linestyle='--', alpha=0.7)
 plt.tight_layout()
 plt.show()
 
-# Distribution of Costs of 10 best suppliers for each task
+# Distribution of Costs of 45 best suppliers for each task
 plt.figure(figsize=(10, 6))
 sns.histplot(new_cost['Cost'], kde=True, bins=30, color='blue')
-plt.title('Distribution of Costs of 10 best suppliers for each task', fontsize=16)
+plt.title('Distribution of Costs of 45 best suppliers for each task', fontsize=16)
 plt.xlabel('Cost', fontsize=14)
 plt.ylabel('Frequency', fontsize=14)
 plt.grid(axis='y', linestyle='--', alpha=0.7)
@@ -147,9 +147,9 @@ plt.tight_layout()
 plt.show()
 
 
-# Step 2.3 - Exploring errors across 10 best suppliers for each task
+# Step 2.3 - Exploring errors across suppliers for each task
 
-# Copy the cost df with data for the 10 best suppliers for each task
+# Copy the cost df of 45 best suppliers
 cost_error = new_cost.copy()
 # Compute the minimum cost for each task
 cost_error['Min cost'] = cost_error.groupby('Task ID')['Cost'].transform('min')
@@ -160,11 +160,13 @@ cost_error['Error'] = cost_error['Min cost'] - cost_error['Cost']
 RMSE = cost_error.groupby('Supplier ID')[['Error']].apply(lambda x: np.sqrt(np.mean(x**2)))
 RMSE = RMSE.reset_index()
 RMSE.columns = ['Supplier ID', 'RMSE']
+# Mean RMSE across the suppliers
+print("Mean RMSE across the suppliers:", RMSE["RMSE"].mean())
 
-# Strip Plot of Errors for Each Task Across Suppliers
+# Strip Plot of Errors for Each Task across 45 best Suppliers
 plt.figure(figsize=(15, 8))
 sns.stripplot(data=cost_error, x='Task ID', y='Error', jitter=True, alpha=0.7, hue = "Supplier ID", legend = False)
-plt.title('Strip Plot of Errors for Each Task Across 10 best Suppliers', fontsize=16)
+plt.title('Strip Plot of Errors for Each Task across 45 best Suppliers', fontsize=16)
 plt.xlabel('Task ID', fontsize=14)
 plt.ylabel('Error', fontsize=14)
 plt.xticks(rotation=90)
@@ -178,7 +180,7 @@ task_error_summary = cost_error.groupby('Task ID')['Error'].mean().reset_index()
 task_error_summary = task_error_summary.sort_values('Error', ascending=False)
 plt.figure(figsize=(15, 8))
 sns.barplot(data=task_error_summary, x='Task ID', y='Error')
-plt.title('Mean Error per Task Across 10 best Suppliers', fontsize=16)
+plt.title('Mean Error per Task across 45 best Suppliers', fontsize=16)
 plt.xlabel('Task ID', fontsize=14)
 plt.ylabel('Mean Error', fontsize=14)
 plt.xticks(rotation=90)

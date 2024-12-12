@@ -33,7 +33,7 @@ model = MLPRegressor(random_state=41)
 # Define the parameter grid for GridSearchCV
 param_grid = {
     'hidden_layer_sizes': [(50,), (100,), (50, 50), (100, 100)],
-    'max_iter': [75, 100],
+    'max_iter': [100],
     'alpha': [0.0001, 0.001],
 }
 
@@ -58,7 +58,7 @@ def grid_search_custom_score(y_true, y_pred):
 
 # Initialize GridSearchCV with Leave-One-Group-Out as the cross-validation strategy
 grid_search = GridSearchCV(estimator=model, param_grid=param_grid, 
-                           scoring=make_scorer(grid_search_custom_score, greater_is_better=False),
+                           scoring=make_scorer(grid_search_custom_score),
                            cv=logo, n_jobs=-1)
 
 # Fit the model to find the best parameters, passing groups
@@ -67,6 +67,15 @@ grid_search.fit(X, y, groups=groups)
 # Get the best estimator and parameters
 best_model = grid_search.best_estimator_
 best_params = grid_search.best_params_
+
+cv_results = grid_search.cv_results_
+params = cv_results['params']  # List of all parameter combinations
+mean_scores = cv_results['mean_test_score']  # Mean cross-validation score for each combination
+std_scores = cv_results['std_test_score']  # Standard deviation of scores for each combination
+
+# Print all parameter combinations with their corresponding scores
+for param, mean, std in zip(params, mean_scores, std_scores):
+    print(f"Params: {param}, Mean Score: {mean:.4f}, Std Dev: {std:.4f}")
 
 # Print the best parameters found by GridSearchCV
 print("Best Parameters:", best_params)

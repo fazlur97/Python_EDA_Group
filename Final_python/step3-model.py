@@ -31,8 +31,7 @@ y=final_df.iloc[:,2]
 # Step 3.2
 
 # Get the test group
-Groups= final_df['Task ID'].unique()
-TestGroup = final_df['Task ID'].drop_duplicates().sample(n=20, random_state=42)
+TestGroup = final_df['Task ID'].drop_duplicates().sample(n=20, random_state=41)
 
 # Split into train and test based on TaskID
 X_test = final_df[final_df['Task ID'].isin(TestGroup)][X.columns]
