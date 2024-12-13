@@ -1,10 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Dec 11 12:42:13 2024
-
-@author: nehathomas
-"""
 # Import libraries
 import pandas as pd
 import numpy as np
@@ -24,8 +17,8 @@ merged_df = pd.merge(df_cost, df_task, on="Task ID")
 final_df = pd.merge(merged_df, df_supply, on="Supplier ID")
 
 # Get the model variables
-X=final_df.iloc[:,3:]
-y=final_df.iloc[:,2]
+X = final_df.iloc[:,3:]
+y = final_df.iloc[:,2]
 
 
 # Step 3.2
@@ -44,7 +37,7 @@ y_train = final_df[~final_df['Task ID'].isin(TestGroup)]['Cost']
 # Step 3.3
 
 # Training a neural network regression model
-mlp = MLPRegressor(hidden_layer_sizes=(50, 50), max_iter=100, random_state=41)
+mlp = MLPRegressor(hidden_layer_sizes=(50, 50), max_iter=100, random_state=42)
 mlp.fit(X_train, y_train)
 
 # Scoring on the test data

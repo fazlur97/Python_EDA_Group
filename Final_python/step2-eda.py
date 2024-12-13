@@ -1,10 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Dec 10 16:41:18 2024
-
-@author: nehathomas
-"""
 # Import libraries
 import numpy as np
 import pandas as pd
@@ -160,7 +153,9 @@ cost_error['Error'] = cost_error['Min cost'] - cost_error['Cost']
 RMSE = cost_error.groupby('Supplier ID')[['Error']].apply(lambda x: np.sqrt(np.mean(x**2)))
 RMSE = RMSE.reset_index()
 RMSE.columns = ['Supplier ID', 'RMSE']
-# Mean RMSE across the suppliers
+# RMSE across the suppliers
+print("Max RMSE across the suppliers:", RMSE["RMSE"].max())
+print("Min RMSE across the suppliers:", RMSE["RMSE"].min())
 print("Mean RMSE across the suppliers:", RMSE["RMSE"].mean())
 
 # Strip Plot of Errors for Each Task across 45 best Suppliers

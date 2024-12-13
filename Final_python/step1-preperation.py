@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Dec 10 15:17:39 2024
-
-@author: nehathomas
-"""
-
 # Import libraries
 import numpy as np
 import pandas as pd
@@ -170,8 +162,10 @@ top_supplier = cost_data.loc[cost_data.groupby("Task ID")["Cost"].idxmin()]
 
 # Identifying the top 45 suppliers for each task
 new_cost = (
-    cost_data.groupby('Task ID')
+    cost_data
+    .groupby('Task ID', sort=False)
     .apply(lambda group: group.nsmallest(45, 'Cost'))
+    .sort_index()
     .reset_index(drop=True)
 )
 
